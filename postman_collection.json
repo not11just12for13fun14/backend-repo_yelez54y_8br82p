@@ -1,0 +1,76 @@
+{
+  "info": {
+    "name": "Coupon Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for the Coupon Management System (FastAPI)"
+  },
+  "item": [
+    {
+      "name": "Create Coupon - FLAT",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8000/coupons", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["coupons"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"SAVE10\",\n  \"description\": \"Flat 10 off\",\n  \"discountType\": \"FLAT\",\n  \"discountValue\": 10,\n  \"startDate\": \"2025-01-01T00:00:00Z\",\n  \"endDate\": \"2026-01-01T00:00:00Z\",\n  \"usageLimitPerUser\": 2,\n  \"eligibility\": {\n    \"allowedUserTiers\": [\"GOLD\", \"SILVER\"],\n    \"minCartValue\": 50,\n    \"applicableCategories\": [\"ELECTRONICS\"]\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Create Coupon - PERCENT",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8000/coupons", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["coupons"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"SAVE25\",\n  \"description\": \"25% off up to $40\",\n  \"discountType\": \"PERCENT\",\n  \"discountValue\": 25,\n  \"maxDiscountAmount\": 40,\n  \"startDate\": \"2025-01-01T00:00:00Z\",\n  \"endDate\": \"2026-01-01T00:00:00Z\",\n  \"usageLimitPerUser\": 1,\n  \"eligibility\": {\n    \"minCartValue\": 100\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "List Coupons",
+      "request": {
+        "method": "GET",
+        "url": {"raw": "http://localhost:8000/coupons", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["coupons"]}
+      }
+    },
+    {
+      "name": "Best Coupon",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8000/best-coupon", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["best-coupon"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"user\": { \"userId\": \"u123\", \"userTier\": \"GOLD\", \"country\": \"US\", \"lifetimeSpend\": 1000, \"ordersPlaced\": 5 },\n  \"cart\": { \"items\": [ { \"productId\": \"p1\", \"category\": \"ELECTRONICS\", \"unitPrice\": 200, \"quantity\": 1 } ] },\n  \"evaluateUsageImpact\": true\n}"
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8000/login", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["login"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"hire-me@anshumat.org\",\n  \"password\": \"HireMe@2025!\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Use Coupon (helper)",
+      "request": {
+        "method": "POST",
+        "header": [{"key": "Content-Type", "value": "application/json"}],
+        "url": {"raw": "http://localhost:8000/use-coupon/SAVE25", "protocol": "http", "host": ["localhost"], "port": "8000", "path": ["use-coupon", "SAVE25"]},
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"u123\",\n  \"userTier\": \"GOLD\",\n  \"country\": \"US\",\n  \"lifetimeSpend\": 1000,\n  \"ordersPlaced\": 5\n}"
+        }
+      }
+    }
+  ]
+}
